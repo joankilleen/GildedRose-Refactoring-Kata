@@ -17,7 +17,6 @@ public class TexttestFixture {
 			new Item("Conjured Mana Cake", 3, 6) };
 
 	public static List<Item> getItems() {
-		System.out.println("Items " + items.length);
 		return Arrays.asList(items);
 	}
 
