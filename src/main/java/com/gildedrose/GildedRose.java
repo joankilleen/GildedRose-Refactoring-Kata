@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 
 public class GildedRose {
-	Item[] items = new Item[100];
+	Item[] items = new Item[1];
 
 	public GildedRose(Item[] items) {
 		Validate.notNull(items);
@@ -17,6 +17,7 @@ public class GildedRose {
 	public GildedRose(List<Item> listItems) {
 		Validate.notNull(listItems);
 		int i = 0;
+		items = new Item[listItems.size()];
 		for (Item listItem : listItems) {
 			items[i++] = listItem;
 
