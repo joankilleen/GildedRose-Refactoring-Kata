@@ -69,6 +69,22 @@ public class GildedRoseTest {
 		}
 		int qualityAfterUpdate = app.searchItems("Sulfuras").get(0).quality;
 		assertTrue(qualityAfterUpdate == qualityBeforeUpdate);
+	}
+
+	@Test
+	public void testQualityNeverNegative() {
+		// arange
+		Item itemManaCake = app.searchItems("Conjured Mana Cake").get(0);
+		assertTrue(itemManaCake != null);
+		int qualityBeforeUpdates = itemManaCake.quality;
+
+		// act - updateQuality more times than necessary to get quality to 0
+		for (int i = qualityBeforeUpdates + 5; i >= 0; i++) {
+			app.updateQuality();
+		}
+
+		// assert quality has not decreased below 0
+		assertTrue(app.searchItems("Conjured Mana Cake").get(0).quality == 0);
 
 	}
 }
