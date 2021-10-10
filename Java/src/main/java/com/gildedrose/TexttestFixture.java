@@ -20,16 +20,14 @@ public class TexttestFixture {
         new Item("Conjured Mana Cake", 3, 6) };
     
     public static List<Item> getItems(){
+        System.out.println("Items " + items.length);
         return Arrays.asList(items);
     }
     public static List<Item> searchItems(String searchText){
-        List<Item> itemsFound =getItems().stream().filter(i->i.name.contains(searchText)).collect(Collectors.toList());
+        List<Item> itemsFound = getItems().stream().filter(i->i.name.contains(searchText)).collect(Collectors.toList());
         return itemsFound;
     }
     public static void main(String[] args) {
-       
-
-
         GildedRose app = new GildedRose(items);
 
         int days = 2;

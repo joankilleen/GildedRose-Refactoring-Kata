@@ -5,12 +5,22 @@ import java.util.Arrays;
 
 class GildedRose {
     Item[] items;
+    private int j;
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
+
+    public GildedRose(List<Item> listItems) {
+        int i=0;
+        for (Item listItem: listItems ){
+            items[i] = listItem;
+            i+=i;
+
+        }
+    }
     public List<Item> getItems(){
-        List<Item> list = new Arrays.asList(items);
+        List<Item> list = Arrays.asList(items);
         return list;
     }
 
