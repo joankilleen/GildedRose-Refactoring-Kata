@@ -153,5 +153,53 @@ public class GildedRoseTest {
 	@Test
 	public void testBackstagePassQualityIncreases() {
 
+		// arrange
+		List<Item> backStagePasses = app.searchItems("TAFKAL80ETC", 15, 20);
+		assert backStagePasses.size() == 1;
+		Item backStagePass = backStagePasses.get(0);
+		int sellIn = backStagePass.sellIn;
+		assert sellIn == 15;
+
+		// act: decrease down to 10 days and verify that the quality increase is 1 per
+		// day
+		for (int i = sellIn; i > 10; i--) {
+			app.updateQuality();
+		}
+		// assert
+		assertTrue(backStagePass.quality == 25);
+		sellIn = backStagePass.sellIn;
+		assertTrue(sellIn == 10);
+
+		// act: decrease sellIn form 10 down to 6 and verify that the quality increase
+		// is 2 per day (10)
+		for (int i = sellIn; i > 5; i--) {
+			app.updateQuality();
+		}
+		// assert
+		assertTrue(backStagePass.quality == 35);
+		sellIn = backStagePass.sellIn;
+		assertTrue(sellIn == 5);
+
+		// act: decrease sellIn form 5 down to 1 and verify that the quality increase
+		// is 3 per day (15)
+		for (int i = sellIn; i > 0; i--) {
+			app.updateQuality();
+		}
+		// assert
+		assertTrue(backStagePass.quality == 50);
+		sellIn = backStagePass.sellIn;
+		assertTrue(sellIn == 0);
+
+		// act: decrease sellIn down past date of concert (0) and verify that quality
+		// drops
+		// to 0
+
+		for (int i = sellIn; i > -2; i--) {
+			app.updateQuality();
+		}
+
+		// assert
+		assertTrue(backStagePass.quality == 0);
+
 	}
 }
