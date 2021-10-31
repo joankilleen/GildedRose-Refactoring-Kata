@@ -1,14 +1,25 @@
 package com.gildedrose;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.activation.UnsupportedDataTypeException;
+
 import org.apache.commons.lang3.Validate;
+
+import com.gildedrose.rules.IRule;
+import com.gildedrose.rules.RuleDefault;
+import com.google.common.collect.ImmutableMap;
 
 public class GildedRose {
 	private Item[] items = new Item[1];
+	// @formatter:off
+	private ImmutableMap<String, IRule<Item>> rules = ImmutableMap.<String, IRule<Item>>builder()
+			.put("Elixir of the Mongoose", new RuleDefault()).put("+5 Dexterity Vest", new RuleDefault()).build();
 
+	// @formatter:on
 	public GildedRose(Item[] items) {
 		Validate.notNull(items);
 		this.items = new Item[items.length];
@@ -105,5 +116,18 @@ public class GildedRose {
 				}
 			}
 		}
+	}
+
+	public void update(Item item) throws UnsupportedDataTypeException {
+
+		IRule<Item> rule = rules.get(item.name);
+		if (rule == null) {
+			throw new UnsupportedDataTypeException(MessageFormat.format("Rule not implemented for {0}", item.name));
+		} else {
+			Item updated = rule.update(item);
+			item.quality = updated.quality;
+			item.sellIn = updated.sellIn;
+		}
+
 	}
 }

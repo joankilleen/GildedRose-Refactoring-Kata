@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.activation.UnsupportedDataTypeException;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,21 +20,22 @@ public class GildedRoseTest {
 		app = new GildedRose(new TexttestFixture().getItems());
 	}
 
+	// ** test updated
 	@Test
-	public void testQualitySellInDecrement() {
+	public void testQualitySellInDecrement() throws UnsupportedDataTypeException {
 		// arrange
-		Item item3 = app.getItems().get(2);
-		int qualityBeforeUpdate = item3.quality;
-		int sellInBeforeUpdate = item3.sellIn;
+		Item elixirItem = app.searchItems("Elixir of the Mongoose").get(0);
+		int qualityBeforeUpdate = elixirItem.quality;
+		int sellInBeforeUpdate = elixirItem.sellIn;
 		// act
-		app.updateQuality();
+		app.update(elixirItem);
 		// assert
-		assertTrue(item3.quality == qualityBeforeUpdate - 1);
-		assertTrue(item3.sellIn == sellInBeforeUpdate - 1);
+		assertTrue(elixirItem.quality == qualityBeforeUpdate - 1);
+		assertTrue(elixirItem.sellIn == sellInBeforeUpdate - 1);
 	}
 
 	@Test
-	public void testSellInPassed() {
+	public void testSellInPassed() throws UnsupportedDataTypeException {
 
 		// arrange
 		List<Item> items = app.searchItems("Dexterity");
@@ -43,14 +46,14 @@ public class GildedRoseTest {
 		// act
 		// Update to day before last
 		for (int i = sellInBefore; i > 0; i--) {
-			app.updateQuality();
+			app.update(dexterityVest);
 		}
 
 		// Read Quality now and check that at the next update it has been degraded by 2.
 		int quality = app.searchItems("Dexterity").get(0).quality;
 
 		// act - SellIn down to zero - quality must decrease by 2
-		app.updateQuality();
+		app.update(dexterityVest);
 
 		// assert
 		int qualityAfterSellInZero = app.searchItems("Dexterity").get(0).quality;
