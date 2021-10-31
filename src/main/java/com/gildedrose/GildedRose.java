@@ -7,11 +7,15 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 
 public class GildedRose {
-	Item[] items = new Item[1];
+	private Item[] items = new Item[1];
 
 	public GildedRose(Item[] items) {
 		Validate.notNull(items);
-		this.items = items;
+		this.items = new Item[items.length];
+		for (int i = 0; i < items.length; i++) {
+			Item next = items[i];
+			this.items[i] = new Item(next.name, next.sellIn, next.quality);
+		}
 	}
 
 	public GildedRose(List<Item> listItems) {
@@ -19,7 +23,8 @@ public class GildedRose {
 		int i = 0;
 		items = new Item[listItems.size()];
 		for (Item listItem : listItems) {
-			items[i++] = listItem;
+			Item itemCopy = new Item(listItem.name, listItem.sellIn, listItem.quality);
+			items[i++] = itemCopy;
 
 		}
 	}
@@ -31,10 +36,22 @@ public class GildedRose {
 
 	}
 
-	public List<Item> searchItems(String searchText) {
+	public List<Item> searchItems(String searchText, Integer sellInParam, Integer qualityParam) {
 		List<Item> itemsFound = getItems().stream().filter(i -> i.name.contains(searchText))
 				.collect(Collectors.toList());
+
+		if (sellInParam != null) {
+			itemsFound = itemsFound.stream().filter(i -> sellInParam == i.sellIn).collect(Collectors.toList());
+		}
+		if (qualityParam != null) {
+			itemsFound.stream().filter(i -> qualityParam == i.quality).collect(Collectors.toList());
+		}
 		return itemsFound;
+	}
+
+	public List<Item> searchItems(String searchText) {
+		return searchItems(searchText, null, null);
+
 	}
 
 	public void updateQuality() {

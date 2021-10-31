@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TexttestFixture {
 
-	private static Item[] items = new Item[] { new Item("+5 Dexterity Vest", 10, 20), //
+	private Item[] items = new Item[] { new Item("+5 Dexterity Vest", 10, 20), //
 			new Item("Aged Brie", 2, 0), //
 			new Item("Elixir of the Mongoose", 5, 7), //
 			new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
@@ -16,11 +16,12 @@ public class TexttestFixture {
 			// this conjured item does not work properly yet
 			new Item("Conjured Mana Cake", 3, 6) };
 
-	public static List<Item> getItems() {
+	public List<Item> getItems() {
 		return Arrays.asList(items);
 	}
 
 	public static void main(String[] args) {
+		List<Item> items = new TexttestFixture().getItems();
 		GildedRose app = new GildedRose(items);
 
 		int days = 2;
@@ -31,7 +32,7 @@ public class TexttestFixture {
 		for (int i = 0; i < days; i++) {
 			System.out.println("-------- day " + i + " --------");
 			System.out.println("name, sellIn, quality");
-			for (Item item : items) {
+			for (Item item : app.getItems()) {
 				System.out.println(item);
 			}
 			System.out.println();

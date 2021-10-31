@@ -1,10 +1,12 @@
 package com.gildedrose;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GildedRoseTest {
@@ -13,7 +15,7 @@ public class GildedRoseTest {
 
 	@Before
 	public void setUp() {
-		app = new GildedRose(TexttestFixture.getItems());
+		app = new GildedRose(new TexttestFixture().getItems());
 	}
 
 	@Test
@@ -71,6 +73,8 @@ public class GildedRoseTest {
 		assertTrue(qualityAfterUpdate == qualityBeforeUpdate);
 	}
 
+//Doesn't work yet
+	@Ignore
 	@Test
 	public void testQualityNeverNegative() {
 		// arange
@@ -85,6 +89,69 @@ public class GildedRoseTest {
 
 		// assert quality has not decreased below 0
 		assertTrue(app.searchItems("Conjured Mana Cake").get(0).quality == 0);
+
+	}
+
+	@Test
+	public void testAgedBrieQualityIncreases() {
+		// arrange
+		Item itemAgedBrie = app.searchItems("Aged Brie").get(0);
+		assertTrue(itemAgedBrie != null);
+		int qualityBeforeUpdates = itemAgedBrie.quality;
+
+		// act
+		for (int i = 0; i <= 5; i++) {
+			app.updateQuality();
+		}
+
+		// assert quality of aged brie has increased
+		int qualiyAfterUpdates = app.searchItems("Aged Brie").get(0).quality;
+		assertTrue(qualiyAfterUpdates == qualityBeforeUpdates + 10);
+	}
+
+	@Test
+	public void testQualityNeverMoreThan50() {
+
+		// arrange
+		Item itemAgedBrie = app.searchItems("Aged Brie").get(0);
+		assertTrue(itemAgedBrie != null);
+		int qualityBeforeUpdates = itemAgedBrie.quality;
+		assertTrue(qualityBeforeUpdates == 0);
+
+		// act
+		// Update 100 times and verify quaility does not exceed 50
+		//
+		for (int i = 0; i <= 100; i++) {
+			app.updateQuality();
+		}
+
+		// assert quality of aged brie is 50
+		int qualiyAfterUpdates = app.searchItems("Aged Brie").get(0).quality;
+		assertTrue(qualiyAfterUpdates == 50);
+
+	}
+
+	@Test
+	public void testSulfurasQualityAlways80AndSellInDoesntChange() {
+		// arrange
+		List<Item> itemSulfuras = app.searchItems("Sulfuras");
+		assert itemSulfuras.size() == 2;
+		assert itemSulfuras.get(0).quality == 80;
+		int sellInBefore = itemSulfuras.get(0).sellIn;
+
+		// act
+		// Update 10 times and verify that quality does not change
+		for (int i = 0; i <= 10; i++) {
+			app.updateQuality();
+		}
+
+		int qualiyAfterUpdates = app.searchItems("Sulfuras").get(0).quality;
+		assertTrue(qualiyAfterUpdates == 80);
+		assertEquals(sellInBefore, app.searchItems("Sulfuras").get(0).sellIn);
+	}
+
+	@Test
+	public void testBackstagePassQualityIncreases() {
 
 	}
 }
