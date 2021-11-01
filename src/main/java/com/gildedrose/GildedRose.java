@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import com.gildedrose.rules.IRule;
 import com.gildedrose.rules.RuleAgedBrie;
 import com.gildedrose.rules.RuleDefault;
+import com.gildedrose.rules.RuleSulfuras;
 import com.google.common.collect.ImmutableMap;
 
 //TODO - enums or some kind of structure for the different types
@@ -25,6 +26,7 @@ public class GildedRose {
 			.put("Elixir of the Mongoose", new RuleDefault())
 			.put("+5 Dexterity Vest", new RuleDefault())
 			.put("Aged Brie", new RuleAgedBrie())
+			.put("Sulfuras, Hand of Ragnaros", new RuleSulfuras())
 			.build();
 
 	// @formatter:on

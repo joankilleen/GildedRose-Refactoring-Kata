@@ -63,14 +63,14 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testSulfurasQualityDoesntChange() {
+	public void testSulfurasQualityDoesntChange() throws UnsupportedDataTypeException {
 		List<Item> sulfuras = app.searchItems("Sulfuras");
 		assertTrue(sulfuras.size() == 2);
 		int qualityBeforeUpdate = sulfuras.get(0).quality;
 
 		// Update quality for 5 days
 		for (int i = 5; i > 0; i--) {
-			app.updateQuality();
+			app.update(sulfuras.get(0));
 		}
 		int qualityAfterUpdate = app.searchItems("Sulfuras").get(0).quality;
 		assertTrue(qualityAfterUpdate == qualityBeforeUpdate);
@@ -135,7 +135,7 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testSulfurasQualityAlways80AndSellInDoesntChange() {
+	public void testSulfurasQualityAlways80AndSellInDoesntChange() throws UnsupportedDataTypeException {
 		// arrange
 		List<Item> itemSulfuras = app.searchItems("Sulfuras");
 		assert itemSulfuras.size() == 2;
@@ -145,7 +145,7 @@ public class GildedRoseTest {
 		// act
 		// Update 10 times and verify that quality does not change
 		for (int i = 0; i <= 10; i++) {
-			app.updateQuality();
+			app.update(itemSulfuras.get(0));
 		}
 
 		int qualiyAfterUpdates = app.searchItems("Sulfuras").get(0).quality;
