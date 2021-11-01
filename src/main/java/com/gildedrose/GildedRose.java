@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import com.gildedrose.rules.IRule;
 import com.gildedrose.rules.RuleAgedBrie;
 import com.gildedrose.rules.RuleBackstagePass;
+import com.gildedrose.rules.RuleConjured;
 import com.gildedrose.rules.RuleDefault;
 import com.gildedrose.rules.RuleSulfuras;
 import com.google.common.collect.ImmutableMap;
@@ -29,6 +30,7 @@ public class GildedRose {
 			.put("Aged Brie", new RuleAgedBrie())
 			.put("Sulfuras, Hand of Ragnaros", new RuleSulfuras())
 			.put("Backstage passes to a TAFKAL80ETC concert", new RuleBackstagePass())
+			.put("Conjured Mana Cake", new RuleConjured())
 			.build();
 
 	// @formatter:on

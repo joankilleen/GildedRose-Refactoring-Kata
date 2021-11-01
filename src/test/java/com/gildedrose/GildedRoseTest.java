@@ -8,7 +8,6 @@ import java.util.List;
 import javax.activation.UnsupportedDataTypeException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class GildedRoseTest {
@@ -20,7 +19,6 @@ public class GildedRoseTest {
 		app = new GildedRose(new TexttestFixture().getItems());
 	}
 
-	// ** test updated
 	@Test
 	public void testQualitySellInDecrement() throws UnsupportedDataTypeException {
 		// arrange
@@ -32,6 +30,19 @@ public class GildedRoseTest {
 		// assert
 		assertTrue(elixirItem.quality == qualityBeforeUpdate - 1);
 		assertTrue(elixirItem.sellIn == sellInBeforeUpdate - 1);
+	}
+
+	@Test
+	public void testConjuredQualityDecrementsTwiceAsFast() throws UnsupportedDataTypeException {
+		// arrange
+		Item conjureditem = app.searchItems("Conjure").get(0);
+		int qualityBeforeUpdate = conjureditem.quality;
+		int sellInBeforeUpdate = conjureditem.sellIn;
+		// act
+		app.update(conjureditem);
+		// assert
+		assertTrue(conjureditem.quality == qualityBeforeUpdate - 2);
+		assertTrue(conjureditem.sellIn == sellInBeforeUpdate - 1);
 	}
 
 	@Test
@@ -76,10 +87,8 @@ public class GildedRoseTest {
 		assertTrue(qualityAfterUpdate == qualityBeforeUpdate);
 	}
 
-//Doesn't work yet
-	@Ignore
 	@Test
-	public void testQualityNeverNegative() {
+	public void testQualityNeverNegative() throws UnsupportedDataTypeException {
 		// arange
 		Item itemManaCake = app.searchItems("Conjured Mana Cake").get(0);
 		assertTrue(itemManaCake != null);
@@ -87,7 +96,7 @@ public class GildedRoseTest {
 
 		// act - updateQuality more times than necessary to get quality to 0
 		for (int i = qualityBeforeUpdates + 5; i >= 0; i++) {
-			app.updateQuality();
+			app.update(itemManaCake);
 		}
 
 		// assert quality has not decreased below 0
@@ -176,7 +185,7 @@ public class GildedRoseTest {
 		// act: decrease sellIn form 10 down to 6 and verify that the quality increase
 		// is 2 per day (10)
 		for (int i = sellIn; i > 5; i--) {
-			app.updateQuality();
+			app.update(backStagePass);
 		}
 		// assert
 		assertTrue(backStagePass.quality == 35);
