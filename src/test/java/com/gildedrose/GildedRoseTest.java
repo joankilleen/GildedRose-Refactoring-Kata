@@ -154,7 +154,7 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testBackstagePassQualityIncreases() {
+	public void testBackstagePassQualityIncreases() throws UnsupportedDataTypeException {
 
 		// arrange
 		List<Item> backStagePasses = app.searchItems("TAFKAL80ETC", 15, 20);
@@ -166,7 +166,7 @@ public class GildedRoseTest {
 		// act: decrease down to 10 days and verify that the quality increase is 1 per
 		// day
 		for (int i = sellIn; i > 10; i--) {
-			app.updateQuality();
+			app.update(backStagePasses.get(0));
 		}
 		// assert
 		assertTrue(backStagePass.quality == 25);
@@ -186,7 +186,7 @@ public class GildedRoseTest {
 		// act: decrease sellIn form 5 down to 1 and verify that the quality increase
 		// is 3 per day (15)
 		for (int i = sellIn; i > 0; i--) {
-			app.updateQuality();
+			app.update(backStagePasses.get(0));
 		}
 		// assert
 		assertTrue(backStagePass.quality == 50);
@@ -198,7 +198,7 @@ public class GildedRoseTest {
 		// to 0
 
 		for (int i = sellIn; i > -2; i--) {
-			app.updateQuality();
+			app.update(backStagePasses.get(0));
 		}
 
 		// assert
