@@ -10,14 +10,22 @@ import javax.activation.UnsupportedDataTypeException;
 import org.apache.commons.lang3.Validate;
 
 import com.gildedrose.rules.IRule;
+import com.gildedrose.rules.RuleAgedBrie;
 import com.gildedrose.rules.RuleDefault;
 import com.google.common.collect.ImmutableMap;
+
+//TODO - enums or some kind of structure for the different types
+//make formatting work
+//better initialisation of the static types
 
 public class GildedRose {
 	private Item[] items = new Item[1];
 	// @formatter:off
 	private ImmutableMap<String, IRule<Item>> rules = ImmutableMap.<String, IRule<Item>>builder()
-			.put("Elixir of the Mongoose", new RuleDefault()).put("+5 Dexterity Vest", new RuleDefault()).build();
+			.put("Elixir of the Mongoose", new RuleDefault())
+			.put("+5 Dexterity Vest", new RuleDefault())
+			.put("Aged Brie", new RuleAgedBrie())
+			.build();
 
 	// @formatter:on
 	public GildedRose(Item[] items) {

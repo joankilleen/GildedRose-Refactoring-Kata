@@ -96,7 +96,7 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testAgedBrieQualityIncreases() {
+	public void testAgedBrieQualityIncreases() throws UnsupportedDataTypeException {
 		// arrange
 		Item itemAgedBrie = app.searchItems("Aged Brie").get(0);
 		assertTrue(itemAgedBrie != null);
@@ -104,7 +104,7 @@ public class GildedRoseTest {
 
 		// act
 		for (int i = 0; i <= 5; i++) {
-			app.updateQuality();
+			app.update(itemAgedBrie);
 		}
 
 		// assert quality of aged brie has increased
@@ -113,7 +113,7 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testQualityNeverMoreThan50() {
+	public void testQualityNeverMoreThan50() throws UnsupportedDataTypeException {
 
 		// arrange
 		Item itemAgedBrie = app.searchItems("Aged Brie").get(0);
@@ -125,7 +125,7 @@ public class GildedRoseTest {
 		// Update 100 times and verify quaility does not exceed 50
 		//
 		for (int i = 0; i <= 100; i++) {
-			app.updateQuality();
+			app.update(itemAgedBrie);
 		}
 
 		// assert quality of aged brie is 50
