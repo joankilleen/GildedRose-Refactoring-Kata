@@ -26,7 +26,7 @@ public class GildedRoseTest {
 		int qualityBeforeUpdate = elixirItem.quality;
 		int sellInBeforeUpdate = elixirItem.sellIn;
 		// act
-		app.update(elixirItem);
+		app.updateQuality();
 		// assert
 		assertTrue(elixirItem.quality == qualityBeforeUpdate - 1);
 		assertTrue(elixirItem.sellIn == sellInBeforeUpdate - 1);
@@ -39,7 +39,7 @@ public class GildedRoseTest {
 		int qualityBeforeUpdate = conjureditem.quality;
 		int sellInBeforeUpdate = conjureditem.sellIn;
 		// act
-		app.update(conjureditem);
+		app.updateQuality();
 		// assert
 		assertTrue(conjureditem.quality == qualityBeforeUpdate - 2);
 		assertTrue(conjureditem.sellIn == sellInBeforeUpdate - 1);
